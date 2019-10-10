@@ -13,6 +13,7 @@ namespace TriangleStuffUnitTests
             TriangleStuffClass myTriangle = new TriangleStuffClass();
             bool result = false;
 
+
             // Act.
             // A parameterless constructor was used so default values are used. At this point it should return false on IsRightTriangle().
             result = myTriangle.IsRightTriangle();
