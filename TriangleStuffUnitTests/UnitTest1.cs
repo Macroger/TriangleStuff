@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using TriangleStuff;
 
 namespace TriangleStuffUnitTests
@@ -9,14 +10,14 @@ namespace TriangleStuffUnitTests
         [TestMethod]
         public void Test_IsRightTriangle_ReturnsFalse()
         {
+
             // Arrange.
             TriangleStuffClass myTriangle = new TriangleStuffClass();
             bool result = false;
 
 
             // Act.
-
-            // A parameterless constructor was used so default values are used. At this point it should return false on IsRightTriangle().
+            // A parameterless constructor was used so default values are assigned. At this point it should return false on IsRightTriangle().
             result = myTriangle.IsRightTriangle();
 
 
@@ -37,8 +38,9 @@ namespace TriangleStuffUnitTests
             TriangleStuffClass myTriangle = new TriangleStuffClass(AngleA, AngleB, AngleC);
 
             // Act.
-            Result = myTriangle.IsRightTriangle();
 
+
+            Result = myTriangle.IsRightTriangle();
             // Assert.
             Assert.IsTrue(Result);
         }
