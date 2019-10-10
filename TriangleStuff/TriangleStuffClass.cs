@@ -6,6 +6,9 @@ namespace TriangleStuff
 {
     public class TriangleStuffClass
     {
-
+        public bool IsRightTriangle()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
