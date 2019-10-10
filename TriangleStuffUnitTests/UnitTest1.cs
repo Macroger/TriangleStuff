@@ -7,7 +7,7 @@ namespace TriangleStuffUnitTests
     public class UnitTest1
     {
         [TestMethod]
-        public void Test_IsRightTriangle_false()
+        public void Test_IsRightTriangle_ReturnsFalse()
         {
             // Arrange.
             TriangleStuffClass myTriangle = new TriangleStuffClass();
@@ -15,12 +15,32 @@ namespace TriangleStuffUnitTests
 
 
             // Act.
+
             // A parameterless constructor was used so default values are used. At this point it should return false on IsRightTriangle().
             result = myTriangle.IsRightTriangle();
 
 
             // Assert.
             Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void Test_IsRightTriangle_ReturnsTrue()
+        {
+            // Arrange.
+            float AngleA = 90.0F;
+            float AngleB = 45.0F;
+            float AngleC = 45.0F;
+            bool Result = false;
+
+            // To test if the triangle is a right angled triangle it must be constructor with specific values, one of which must be 90.0.
+            TriangleStuffClass myTriangle = new TriangleStuffClass(AngleA, AngleB, AngleC);
+
+            // Act.
+            Result = myTriangle.IsRightTriangle();
+
+            // Assert.
+            Assert.IsTrue(Result);
         }
     }
 }
