@@ -1,5 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TriangleStuffUnitTests;
+using TriangleStuff;
 
 namespace TriangleStuffUnitTests
 {
