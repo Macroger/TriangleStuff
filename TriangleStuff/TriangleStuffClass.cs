@@ -8,7 +8,7 @@ namespace TriangleStuff
     {
         public bool IsRightTriangle()
         {
-            throw new NotImplementedException();
+            return false;
         }
     }
 }
