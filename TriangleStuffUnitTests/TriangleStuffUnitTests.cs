@@ -18,6 +18,16 @@ namespace TriangleStuffUnitTests
             Assert.IsFalse(Result);
         }
         [TestMethod]
+        public void Test_ValidateAngle_GivenTooSmallAngle_ReturnsFalse()
+        {
+            // This Angle is designed to be invalid by being under the min valid angle.
+            double BadAngle = 0.0000001;
+
+            bool Result = TriangleStuffClass.ValidateAngle(BadAngle);
+
+            Assert.IsFalse(Result);
+        }
+        [TestMethod]
         public void Test_IsRightTriangle_ReturnsFalse()
         {
 
