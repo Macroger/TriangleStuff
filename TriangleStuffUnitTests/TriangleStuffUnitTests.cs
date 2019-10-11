@@ -17,6 +17,7 @@ namespace TriangleStuffUnitTests
 
             Assert.IsFalse(Result);
         }
+
         [TestMethod]
         public void Test_ValidateAngle_GivenTooSmallAngle_ReturnsFalse()
         {
