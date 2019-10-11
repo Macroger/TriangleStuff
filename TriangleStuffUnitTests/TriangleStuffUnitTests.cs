@@ -48,7 +48,7 @@ namespace TriangleStuffUnitTests
         [TestMethod]
         public void Test_DetermineAreaOfRightTriangle_GivenValidValues_ReturnsCorrectCalculation()
         {
-            // Arrange
+            // Arrange 
             double SideA = 55;
             double SideB = 92.6;
             double AreaOfTriangle = 2546.5;
