@@ -30,7 +30,6 @@ namespace TriangleStuff
         // leave room for (MaxAngleValue) + (MinAngleValue) + (MinAngleValue) which translates into (179.8) + (0.1) + (0.1) = 180.0.
         private const double _MaximumAngleValue = 179.8;
         private const double _MinimumAngleValue = 0.1;
-
         private const double _DegreesInATriangle = 180.0;
         private const double _MaxSideLength = 1000000;
         private const double _MinSideLength = 0.00001;
