@@ -28,6 +28,23 @@ namespace TriangleStuffUnitTests
 
             Assert.IsFalse(Result);
         }
+
+        [TestMethod]
+        public void Test_ValidateTriangle_GivenTooSmallTotalAngles_ReturnsFalse()
+        {
+            // This Angle is designed to be invalid by being under the min valid degrees for a triangle.
+            // This set shoud equal 80 + 70 + 5 = 175 degrees, which is invalid for a triangle.
+            double BadAngleA = 80;
+            double BadAngleB = 70;
+            double BadAngleC = 5;
+
+            bool Result = TriangleStuffClass.ValidateTriangle(BadAngleA, BadAngleB, BadAngleC);
+
+            Assert.IsFalse(Result);
+        }
+
+
+
         [TestMethod]
         public void Test_IsRightTriangle_ReturnsFalse()
         {
