@@ -489,8 +489,6 @@ namespace TriangleStuff
             
         }
 
-
-        
         /*
         **	Method Name:	ValidateAngle()
         **	Parameters:		double Angle: This double holds the user's angle which must be validated before used in calculations.
