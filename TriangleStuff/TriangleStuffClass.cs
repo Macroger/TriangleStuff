@@ -518,7 +518,6 @@ namespace TriangleStuff
         {
             double AreaOfTriangle = 0;
 
-
             AreaOfTriangle = 0.5 * (SideA * SideB);
 
             return AreaOfTriangle;

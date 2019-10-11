@@ -51,7 +51,7 @@ namespace TriangleStuffUnitTests
             // Arrange
             double SideA = 55;
             double SideB = 92.6;
-            double AreaOfTriangle = 5093;
+            double AreaOfTriangle = 2546.5;
             double Result = 0;
             TriangleStuffClass myTriangle = new TriangleStuffClass();
 
