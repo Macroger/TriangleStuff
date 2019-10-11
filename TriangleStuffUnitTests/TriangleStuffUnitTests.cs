@@ -29,6 +29,8 @@ namespace TriangleStuffUnitTests
             Assert.IsFalse(Result);
         }
 
+
+
         [TestMethod]
         public void Test_ValidateTriangle_GivenTooSmallTotalAngles_ReturnsFalse()
         {
@@ -41,6 +43,25 @@ namespace TriangleStuffUnitTests
             bool Result = TriangleStuffClass.ValidateTriangle(BadAngleA, BadAngleB, BadAngleC);
 
             Assert.IsFalse(Result);
+        }
+
+        [TestMethod]
+        public void Test_DetermineAreaOfRightTriangle_GivenValidValues_ReturnsCorrectCalculation()
+        {
+            // Arrange
+            double SideA = 55;
+            double SideB = 92.6;
+            double AreaOfTriangle = 5093;
+            double Result = 0;
+            TriangleStuffClass myTriangle = new TriangleStuffClass();
+
+
+            // Act
+            Result = myTriangle.DetermineAreaOfRightTriangle(SideA, SideB);
+
+
+            // Assert
+            Assert.AreEqual(AreaOfTriangle, Result);
         }
 
 
