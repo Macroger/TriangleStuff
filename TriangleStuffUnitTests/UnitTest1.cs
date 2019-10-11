@@ -29,9 +29,9 @@ namespace TriangleStuffUnitTests
         public void Test_IsRightTriangle_ReturnsTrue()
         {
             // Arrange.
-            float AngleA = 90.0F;
-            float AngleB = 45.0F;
-            float AngleC = 45.0F;
+            double AngleA = 90.0;
+            double AngleB = 45.0;
+            double AngleC = 45.0;
             bool Result = false;
 
             // To test if the triangle is a right angled triangle it must be constructor with specific values, one of which must be 90.0.

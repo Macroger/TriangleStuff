@@ -4,31 +4,12 @@ namespace TriangleStuff
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            float AngleA = 90.0F;
-            float AngleB = 45.0F;
-            float AngleC = 45.0F;
+            TriangleStuffUI myTriangleStuffUI = new TriangleStuffUI();
 
-
-            try
-            {
-               TriangleStuffClass myTriangle = new TriangleStuffClass(AngleA, AngleB, AngleC);
-
-                if(myTriangle.IsRightTriangle())
-                {
-                    Console.WriteLine("This triangle is a right triangle.");
-
-                }
-                else
-                {
-                    Console.WriteLine("This triangle is NOT a right triangle.");
-                }
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine("Exception caught! Details: ", ex.Message);
-            }
+            myTriangleStuffUI.DrawMainMenu();
+                                  
         }
     }
 }
