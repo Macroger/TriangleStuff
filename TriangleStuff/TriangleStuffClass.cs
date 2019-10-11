@@ -514,6 +514,14 @@ namespace TriangleStuff
             return Result;
         }
 
+        public double DetermineAreaOfRightTriangle(double SideA, double SideB)
+        {
+            double AreaOfTriangle = 0;
+
+            AreaOfTriangle = 0.5 * (SideA * SideB);
+
+            return AreaOfTriangle;
+        }
 
         public static bool ValidateTriangle(double AngleA, double AngleB, double AngleC)
         {
