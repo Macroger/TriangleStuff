@@ -74,8 +74,7 @@ namespace TriangleStuffUnitTests
             double AreaOfTriangle = 0;
             double Result = 0;
             TriangleStuffClass myTriangle = new TriangleStuffClass();
-
-
+            
             // Act
             Result = myTriangle.DetermineAreaOfRightTriangle(SideA, SideB);
 
