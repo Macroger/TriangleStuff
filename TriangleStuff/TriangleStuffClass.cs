@@ -155,7 +155,7 @@ namespace TriangleStuff
             }
             set
             {
-                if(value > 0 && value < _MaxSideLength)
+                if(value > _MinSideLength && value < _MaxSideLength)
                 {
                     _SideA = value;
                 }
@@ -170,7 +170,7 @@ namespace TriangleStuff
             }
             set
             {
-                if(value > 0 && value < _MaxSideLength)
+                if(value > _MinSideLength && value < _MaxSideLength)
                 {
                     _SideB = value;
                 }
@@ -184,7 +184,7 @@ namespace TriangleStuff
             }
             set
             {
-                if (value > 0 && value < _MaxSideLength)
+                if (value > _MinSideLength && value < _MaxSideLength)
                 {
                     _SideC = value;
                 }
@@ -518,7 +518,10 @@ namespace TriangleStuff
         {
             double AreaOfTriangle = 0;
 
-            AreaOfTriangle = 0.5 * (SideA * SideB);
+            if(ValidateSideLength(SideA) && ValidateSideLength(SideB))
+            {
+                AreaOfTriangle = 0.5 * (SideA * SideB);
+            }
 
             return AreaOfTriangle;
         }
@@ -540,6 +543,18 @@ namespace TriangleStuff
             {
                 // Triangle angles do not add up to 180.0. This triangle is invalid!
                 Result = false;
+            }
+
+            return Result;
+        }
+
+        public static bool ValidateSideLength(double Side)
+        {
+            bool Result = false;
+
+            if(Side <= _MaxSideLength && Side >= _MinSideLength)
+            {
+                Result = true;
             }
 
             return Result;
