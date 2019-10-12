@@ -64,6 +64,25 @@ namespace TriangleStuffUnitTests
             Assert.AreEqual(AreaOfTriangle, Result);
         }
 
+        [TestMethod]
+        public void Test_DetermineAreaOfRightTriangle_GivenInvalidValues_ReturnsZero()
+        {
+            // Arrange 
+            // Feeding the method under test a very small value that should be rejected.
+            double SideA = 0.0000000001;
+            double SideB = 5;
+            double AreaOfTriangle = 0;
+            double Result = 0;
+            TriangleStuffClass myTriangle = new TriangleStuffClass();
+
+
+            // Act
+            Result = myTriangle.DetermineAreaOfRightTriangle(SideA, SideB);
+
+
+            // Assert
+            Assert.AreEqual(AreaOfTriangle, Result);
+        }
 
 
         [TestMethod]
