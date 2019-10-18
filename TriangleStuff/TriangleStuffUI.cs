@@ -14,30 +14,52 @@ using System.Text.RegularExpressions;
 
 namespace TriangleStuff
 {
+     /*
+     **  Class Name: TriangleStuffUI
+     **  Description: This class is designed to act as the UI layer between the user and the underlying Triangle class it uses.
+     */
     class TriangleStuffUI
     {
+
+        // Datamember(s):
+
+        // This enum is used to hold the values that will be checked against the users' input to determine which option they wish to use. Main objective is to prevent magic numbers.
         private enum MainMenuOptionsEnum
         {
             InputNewTriangle = 1,
             AdjustSideA,
             AdjustSideB,
             CalculateHypotenuse,
+            CalculateArea,
             Quit
         }
+
+        // This list of strings is used to hold the options that should be displayed on the screen.
         private List<string> MainMenuOptions = new List<string>
         {
             "Input New Triangle",
             "Adjust Side A Length",
             "Adjust Side B Length", 
             "Calculate Hypotenuse",
+            "Calculate Area",
             "Quit"
 
         };
 
+        // This const char is the value for a degree symbol. Used to enrich the display elements with the actual degree symbol instead of text "degrees".
         private const char AsciiDegreeSymbol = (char)176;
 
-        private TriangleStuffClass myTriangle = new TriangleStuffClass();
+        //  An instantiated object of type Triangle. Used to do most of the actual processing as this class is just the UI to Triangle.
+        private Triangle myTriangle = new Triangle();
 
+        // Method(s):
+
+        /*
+        **	Method Name:	DrawMainMenu()
+        **	Parameters:		None.
+        **	Return Values:	Void.
+        **	Description:	This method is used to display the main menu to the user. It also prompts the user for input and determines which screen to activate.
+        */
         public void DrawMainMenu()
         {
             string UserResponse = "";
@@ -48,6 +70,7 @@ namespace TriangleStuff
                 // Clear the console screen incase anything else was displayed.
                 Console.Clear();
 
+                // Display the main information screen including details on the triangle currently loaded.
                 Console.WriteLine(
                     "Triangle Stuff UI v0.1" +
                     "\n\n\n" +
@@ -63,20 +86,24 @@ namespace TriangleStuff
                     $"\nSide A: {myTriangle.SideA:N3}" +
                     $"\nSide B: {myTriangle.SideB:N3}" +
                     $"\n{(myTriangle.WhatTypeOfAngle() == "Right" ? "Hypotenuse" : "Side C")}: {myTriangle.SideC:N3}" +
+                    $"\n{(myTriangle.WhatTypeOfAngle() == "Right" ? ($"Area: {myTriangle.Area:N3}" ): "")} " +
                     "\n\n\n" +
                     "Menu Options:" +
                     "\n"
                     );
 
+                // Using a loop to display the options the user can choose from, based on the MainMenuOptions list.
                 for (int i = 0; i < MainMenuOptions.Count; i++)
                 {
                     Console.WriteLine((i + 1) + ".) " + MainMenuOptions[i]);
                 }
-
+                
                 Console.Write("\nSelection: ");
 
+                // Get user's input.
                 UserResponse = Console.ReadLine();
 
+                // If the user's input is valid, determine which option they chose.
                 if(ValidateMainMenuOptionChoice(UserResponse))
                 {
                     int UserResponseValue = Int32.Parse(UserResponse);
@@ -102,7 +129,12 @@ namespace TriangleStuff
                             PressAnyKeyToContiue();
                             break;
 
-                        case (int)MainMenuOptionsEnum.Quit:
+                        case (int)MainMenuOptionsEnum.CalculateArea:
+                            DisplayCalculateAreaScreen();
+                            PressAnyKeyToContiue();
+                            break;
+
+                         case (int)MainMenuOptionsEnum.Quit:
                             Console.WriteLine("\nExiting program...");
                             break;
 
@@ -118,14 +150,19 @@ namespace TriangleStuff
             }
         }
 
-
+        /*
+        **	Method Name:	DisplayCalculateHypotenuseScreen()
+        **	Parameters:		None.
+        **	Return Values:	Void.
+        **	Description:	This method shows the calculate hypotenuse screen, but only if the currently loaded triangle qualifies as right angled.
+        */
         public void DisplayCalculateHypotenuseScreen()
         {
             if(myTriangle.IsRightTriangle() == true)
             {
                 Console.Clear();
 
-                double RawHypotenuse = TriangleStuffClass.DetermineHypotenuse(myTriangle.SideA, myTriangle.SideB);
+                double RawHypotenuse = Triangle.DetermineHypotenuse(myTriangle.SideA, myTriangle.SideB);
                 myTriangle.SideC = Math.Round(RawHypotenuse, 3);
                 Console.Write(
                   "Triangle Stuff UI v0.1" +
@@ -148,6 +185,48 @@ namespace TriangleStuff
             }
         }
 
+        /*
+        **	Method Name:	DisplayCalculateAreaScreen()
+        **	Parameters:		None.
+        **	Return Values:	Void.
+        **	Description:	This method shows the calculate area screen, but only if the currently loaded triangle qualifies as right angled.
+        */
+        public void DisplayCalculateAreaScreen()
+        {
+            if (myTriangle.IsRightTriangle() == true)
+            {
+                Console.Clear();
+
+                double RawArea = myTriangle.DetermineAreaOfRightTriangle(myTriangle.SideA, myTriangle.SideB);
+                myTriangle.Area = Math.Round(RawArea, 3);
+                Console.Write(
+                  "Triangle Stuff UI v0.1" +
+                   "\n" +
+                   $"Calculate Area Screen." +
+                   "\n\n" +
+                   $"This screen will automatically calculate the area based on the sides of the currently loaded right angled triangle." +
+                   "\n\n" +
+                   $"Side A: {myTriangle.SideA}." +
+                   "\n" +
+                   $"Side B: {myTriangle.SideB}." +
+                   "\n" +
+                   $"Area: {myTriangle.Area}." +
+                   "\n\n"
+                   );
+            }
+            else
+            {
+                Console.WriteLine("\n\nError, the current triangle is not right angled.\nCalculate area menu option only applies to right angled triangles.\n\n");
+            }
+        }
+
+        /*
+        **	Method Name:	DisplayAdjustSideScreen()
+        **	Parameters:		string WhichSide: This string determines which side this screen is working on.
+        **	Return Values:	Void.
+        **	Description:	This method is used to display the screen for adjusting a side length. Its used for both side A and B. It determines which side it is working on
+        **                  by looking at WhichSide. It uses a regex pattern to allow only a specific range of numbers (0.0001 - 1,000,000).
+        */
 
         public void DisplayAdjustSideScreen(string WhichSide)
         {
@@ -210,7 +289,13 @@ namespace TriangleStuff
             }
         }
 
-
+        /*
+        **	Method Name:	DisplayInsertNewAnglesSreen()
+        **	Parameters:		None.
+        **	Return Values:	Void.
+        **	Description:	This method is used to display the screen for inputting new angles into the triangle. Because of the nature of a triangle it is impossible to update only one angle, it would invalidate the rest.
+        **                  Instead, this method gets the user to input two angles at a time and calculates the third.
+        */
         public void DisplayInsertNewAnglesSreen()
         {
             string UserResponse = "";
@@ -322,6 +407,12 @@ namespace TriangleStuff
             }
         }
 
+        /*
+        **	Method Name:	PressAnyKeyToContiue()
+        **	Parameters:		None.
+        **	Return Values:	Void.
+        **	Description:	This method is used to display a short message and wait for the user to enter input of any kind. Just a shortcut to a function I found myself using often.
+        */
         public void PressAnyKeyToContiue()
         {
             Console.Write("\nPress any key to continue...");
@@ -349,6 +440,12 @@ namespace TriangleStuff
             return Result;
         }
 
+        /*
+        **	Method Name:	ValidateSideLengthString()
+        **	Parameters:		string UserResponse: This string is the user's input string, which should be check to ensure its valid.
+        **	Return Values:	bool: This method returns a boolean value to indicate whether the string passed validation. It returns True when validation passes, and False when it fails.
+        **	Description:	This method is used to validate a user's input for side length. It uses a regex pattern that allows numbers between 0.00001 and 1,000,000 inclusive.
+        */
         public bool ValidateSideLengthString(string UserResponse)
         {
             bool Result = false;
@@ -363,6 +460,7 @@ namespace TriangleStuff
 
             return Result;
         }
+        
         /*
         **	Method Name:	ValidateOptionChoice()
         **	Parameters:		string UserResponse: This string represents the user's choice of main menu options.

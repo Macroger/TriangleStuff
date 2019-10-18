@@ -1,10 +1,25 @@
-﻿using System;
+﻿/*
+**  File Name:      Triangle.cs
+**	Project Name:	TriangleStuff
+**	Author:         Matthew G. Schatz
+**  Date:           October 18, 2019
+**	Description:	This file holds the source code for the Triangle class. This class is designed to represent a triangle, and knows about characteristics typical to a triangle such as internal angles and side lengths.
+*/
+
+using System;
 
 namespace TriangleStuff
 {
-    public class TriangleStuffClass
+     /*
+     **  Class Name: Triangle
+     **  Description: This class is designed to represent a Triangle. It holds information about a single triangle, including angles and sides. It performs calculations to determine what kind of 
+     *   triangle category it is, and what type of angle it has.
+     */
+    public class Triangle
     {
         // Data Members
+
+        // This enum is used to enumerate the three types of triangles, Equilateral, Isosceles, and Scalene.
         private enum TriangleTypeCategories
         {
             // Equilateral: Three equal sides, three equal angles.
@@ -15,6 +30,8 @@ namespace TriangleStuff
             Scalene,
 
         }
+
+        // This enum is used to enumerate the three types of angles a triangle can have, Right, Acute, and Obtuse.
         private enum TriangleAngleTypeCategories
         {
             // Has one angle of exactly 90 degrees.
@@ -29,22 +46,48 @@ namespace TriangleStuff
         // I am using a value of 179.8F for maximum of each angle because there needs to be room for all three angles, and if each has a minimum of 0.1 then the maximum must
         // leave room for (MaxAngleValue) + (MinAngleValue) + (MinAngleValue) which translates into (179.8) + (0.1) + (0.1) = 180.0.
         private const double _MaximumAngleValue = 179.8;
+       
+        // This constant represents the minimum value this class will allow for its triangle.
         private const double _MinimumAngleValue = 0.1;
+        
+        // This constant represents the total degrees in a triangle.
         private const double _DegreesInATriangle = 180.0;
+       
+        // This constant represents the largest value acceptable for a side length.
         private const double _MaxSideLength = 1000000;
+        
+        // This constant represents the smallest value acceptable for a side length.
         private const double _MinSideLength = 0.00001;
 
+        // This constant represents the largest value acceptable for area.
+        private const double _MaxAreaValue = 1000000;
+
+        // This constant represents the smallest value acceptable for area.
+        private const double _MinAreaValue = 0.00001;
+
+        // This constant represents the number of decimal places to keep in calculations.
+        private const int _NumberOfDecimalPlacesToKeep = 5;
+
+        // These values are used to hold the angles.
         private double _AngleA;
         private double _AngleB;
         private double _AngleC;
+
+        // These values are used to hold the side lengths.
         private double _SideA;
         private double _SideB;
         private double _SideC;
 
+        // This value is used to hold the area of the triangle. This value is only valid if the triangle is a right angled triangle.
+        private double _Area;
+
+        // This variable is used to hold the current triangle type (Equilateral, Isosceles, Scalene).
         private int _TriangleType;
+
+        // This variable is used to hold the current triangle's angle type (Right, Acute, Obtuse).
         private int _TriangleAngleType;
 
-
+        // Property accessor for _TriangleType.
         public int TriangleType
         {
             get
@@ -62,7 +105,7 @@ namespace TriangleStuff
 
         }
 
-
+        // Property accessor for _TriangleAngleType.
         public int TriangleAngleType
         {
             get
@@ -79,7 +122,7 @@ namespace TriangleStuff
             }
         }
 
-
+        // Property accessor for _AngleA.
         public double AngleA
         {
             get
@@ -96,7 +139,7 @@ namespace TriangleStuff
                 
         }
 
-
+        // Property accessor for _AngleB.
         public double AngleB
         {
             get
@@ -113,7 +156,7 @@ namespace TriangleStuff
             }
         }
 
-
+        // Property accessor for _AngleC.
         public double AngleC
         {
             get
@@ -129,24 +172,7 @@ namespace TriangleStuff
             }
         }
 
-        // Read only property.
-        public double MaxSideLength
-        {
-            get
-            {
-                return _MaxSideLength;
-            }
-        }
-
-        // Read only property.
-        public double MinSideLength
-        {
-            get
-            {
-                return _MinSideLength;
-            }
-        }
-
+        // Property accessor for SideA.
         public double SideA
         {
             get
@@ -155,13 +181,14 @@ namespace TriangleStuff
             }
             set
             {
-                if(value > _MinSideLength && value < _MaxSideLength)
+                if (value > _MinSideLength && value < _MaxSideLength)
                 {
                     _SideA = value;
                 }
             }
         }
 
+        // Property accessor for SideB.
         public double SideB
         {
             get
@@ -170,12 +197,14 @@ namespace TriangleStuff
             }
             set
             {
-                if(value > _MinSideLength && value < _MaxSideLength)
+                if (value > _MinSideLength && value < _MaxSideLength)
                 {
                     _SideB = value;
                 }
             }
         }
+
+        // Property accessor for SideC.
         public double SideC
         {
             get
@@ -191,8 +220,59 @@ namespace TriangleStuff
             }
         }
 
+        // Property accessor for Area.
+        public double Area
+        {
+            get
+            {
+                return _Area;
+            }
+            set
+            {
+                if (value > _MinAreaValue && value < _MaxAreaValue)
+                {
+                    _Area = value;
+                }
+            }
+        }
 
-        // Read only property.
+        // Read only property accessor for _MaxSideLength.
+        public double MaxSideLength
+        {
+            get
+            {
+                return _MaxSideLength;
+            }
+        }
+
+        // Read only property accessor for _MinSideLength.
+        public double MinSideLength
+        {
+            get
+            {
+                return _MinSideLength;
+            }
+        }
+
+        // Read only property accessor for _MaxSideLength.
+        public double MaxAreaValue
+        {
+            get
+            {
+                return _MaxAreaValue;
+            }
+        }
+
+        // Read only property accessor for _MinSideLength.
+        public double MinAreaValue
+        {
+            get
+            {
+                return _MinAreaValue;
+            }
+        }
+
+        // Read only property property accessor for _MaximumAngleValue.
         public double MaximumAngleValue
         {
             get
@@ -201,7 +281,7 @@ namespace TriangleStuff
             }
         }
 
-        // Read only property.
+        // Read only property accessor for _MinimumAngleValue.
         public double MinimumAngleValue
         {
             get
@@ -210,7 +290,7 @@ namespace TriangleStuff
             }
         }
 
-        // Read only property.
+        // Read only property accessor for _DegreesInATriangle.
         public double DegreesInATriangle
         {
             get
@@ -219,15 +299,17 @@ namespace TriangleStuff
             }
         }
 
+        // Method(s):
 
         /*
-        **	Method Name:	TriangleStuffClass()
+        **	Method Name:	Triangle()
         **	Parameters:		None, is constructor.
         **	Return Values:	None, is constructor.
-        **	Description:	This is one of the overloaded constructor methods for the TriangleStuffClass class. This one constructs a triangle using default
-        **                  values. It will construct a triangle with 3 internal angles of 60.0 degrees each. This is an equilateral triangle.
+        **	Description:	This is one of the overloaded constructor methods for the Triangle class. This one constructs a triangle using default
+        **                  values. It will construct a triangle with 3 internal angles of 60.0 degrees each. This is an equilateral triangle with acute angles.
+        **                  Sides are gives default values of 1.0 each.
         */
-        public TriangleStuffClass()
+        public Triangle()
         {
             _AngleA = 60.0;
             _AngleB = 60.0;
@@ -242,70 +324,14 @@ namespace TriangleStuff
         }
 
         /*
-        **	Method Name:	TriangleStuffClass()
-        **	Parameters:		None, is constructor.
-        **	Return Values:	None, is constructor.
-        **	Description:	This is one of the overloaded constructor methods for the TriangleStuffClass class. This one constructs a triangle using 2 incomming parameters
-        **                  which represent the three internal angles of the triangle. The third angle will be computed from the first two.
-        */
-        public TriangleStuffClass(double AngleA, double AngleB)
-        {
-
-            if (ValidateAngle(AngleA) == false)
-            {
-                throw new ArgumentOutOfRangeException($"AngleA failed validation. It must be within the values {_MinimumAngleValue} and {_MaximumAngleValue}");
-            }
-
-            if (ValidateAngle(AngleB) == true)
-            {
-                // Is Angle B less than (TriangleTotalAngle - AngleA - (minPossibleValueforAngleC)).
-                double MaxPossibleValueForAngleB = _DegreesInATriangle - AngleA - _MinimumAngleValue;
-
-                // Using rounded values to avoid floating point precision issues.
-                double RoundedMaxPossibleValueForAngleB = Math.Round(MaxPossibleValueForAngleB, 1);
-                double RoundedAngleB = Math.Round(AngleB, 1);
-
-                if (RoundedAngleB > RoundedMaxPossibleValueForAngleB)
-                {
-                    throw new ArgumentOutOfRangeException($"AngleB's value plus AngleA's value exceed {_DegreesInATriangle} degrees (the max for any triangle).");
-                }
-
-            }
-            else
-            {
-                throw new ArgumentOutOfRangeException($"AngleB failed validation. It must be within the values {_MinimumAngleValue} and {_MaximumAngleValue}");
-            }
-
-            double AngleC = DetermineThirdAngle(AngleA, AngleB);
-
-            if(AngleC >= _MinimumAngleValue)
-            {
-                _AngleA = AngleA;
-                _AngleB = AngleB;
-                _AngleC = AngleC;
-            }
-            else
-            {
-                // Triangle is invalid
-                throw new Exception("Error computing AngleC, result was 0.");
-            }
-
-            _SideA = 1.0;
-            _SideB = 1.0;
-            _SideC = 1.0;
-
-            _TriangleType = (int)TriangleTypeCategories.Equilateral;
-            _TriangleAngleType = (int)TriangleAngleTypeCategories.AcuteAngled;
-        }
-
-        /*
-        **	Method Name:	TriangleStuffClass()
+        **	Method Name:	Triangle()
         **	Parameters:		None, is constructor.
         **	Return Values:	None, is constructor.
         **	Description:	This is one of the overloaded constructor methods for the TriangleStuffClass class. This one constructs a triangle using 3 incomming parameters
         **                  which represent the three internal angles of the triangle.
+        *   Exceptions:     This method can throw exceptions of ArgumentOutOfRangeException type.
         */
-        public TriangleStuffClass(double AngleA, double AngleB, double AngleC)
+        public Triangle(double AngleA, double AngleB, double AngleC)
         {
             if(ValidateAngle(AngleA) == false)
             {
@@ -343,6 +369,12 @@ namespace TriangleStuff
             _TriangleAngleType = (int)TriangleAngleTypeCategories.AcuteAngled;
         }
 
+        /*
+        **	Method Name:	WhatTypeOfAngle()
+        **	Parameters:		None.
+        **	Return Values:	string: A string containing the angle of the triangle.
+        **	Description:	This method returns a string indicating the type of angle of the currently loaded triangle.
+        */
         public string WhatTypeOfAngle()
         {
             string ReturnString = "";
@@ -412,6 +444,12 @@ namespace TriangleStuff
             return ReturnString;
         }
 
+        /*
+        **	Method Name:	WhatKindOfTriangle
+        **	Parameters:		None.
+        **	Return Values:	string: A string containing the type of the triangle.
+        **	Description:	This method returns a string indicating the type of the currently loaded triangle.
+        */
         public string WhatKindOfTriangle()
         {
             int Result = 0;
@@ -458,7 +496,7 @@ namespace TriangleStuff
         **	Parameters:		None.
         **	Return Values:	bool; This method returns boolean true when the currently loaded angle values indicate a right angled triangle.
         **	Description:	This method returns a boolean value to indicate wheter the currently loaded triangle is a right angled triangle.
-        **                  Currently this method does this by rounding each angle and determining if it equals a (also rounded) value of 90.
+        **                  To determine if the triangle is right angled it calls the WhatTypeOfAngle method, and passes on true if its right angled.
         */
         public bool IsRightTriangle()
         {
@@ -472,6 +510,15 @@ namespace TriangleStuff
             return Result;
         }
 
+        /*
+        **	Method Name:	InsertNewTriangle()
+        **	Parameters:		double FirstAngle:  A double containing the first angle of the new triangle.
+        *                   double SecondAngle: A double containing the second angle of the new triangle.
+        *                   double ThirdAngle: A double containing the third angle of the new triangle.
+        **	Return Values:	bool:
+        **	Description:	This method is used to insert a new triangle into the class. It calls the triangle validation method to verify its of correct angles
+        **                  before inserting the new angles in.
+        */
         public bool InsertNewTriangle(double FirstAngle, double SecondAngle, double ThirdAngle)
         {
             bool Result = false;
@@ -490,12 +537,32 @@ namespace TriangleStuff
         }
 
         /*
+        **	Method Name:	DetermineAreaOfRightTriangle()
+        **	Parameters:		double SideA:   Thie first side of the right angled triangle.
+        *                   double SideB:   The second side of the right angled triangle.
+        **	Return Values:	double: The result of the calculation. This value is the area of a right triangle having the dimensions specified by SideA and SideB.
+        **	Description:	This method is used to calculate the area of a right triangle. Nothing major, just some basic triangle math and a return value.
+        */
+        public double DetermineAreaOfRightTriangle(double SideA, double SideB)
+        {
+            double AreaOfTriangle = 0;
+
+            if (ValidateSideLength(SideA) && ValidateSideLength(SideB))
+            {
+                AreaOfTriangle = 0.5 * (SideA * SideB);
+                AreaOfTriangle = Math.Round(AreaOfTriangle, _NumberOfDecimalPlacesToKeep);
+            }
+
+            return AreaOfTriangle;
+        }
+
+        /*
         **	Method Name:	ValidateAngle()
         **	Parameters:		double Angle: This double holds the user's angle which must be validated before used in calculations.
         **	Return Values:	bool; This method returns boolean true when validation passes and false when it does not.
         **	Description:	This method validates an incomming double by ensuring it's value is between MinimuimAngleValue(0.1) and MaximumAngleValue(179.8).
         **                  An angle of 0.0 would be invalid, as it would not be an angle at all, so I choose 0.1 as minimum angle.
-        **                  Any one angle being 179.9 degrees or more would not leave enough for the minimums for the othe two angles.
+        **                  Any one angle being 179.9 degrees or more would not leave enough for the minimums for the othe two angles. That is why 179.8 was chosen as max.
         */
         public static bool ValidateAngle(double Angle)
         {
@@ -514,18 +581,15 @@ namespace TriangleStuff
             return Result;
         }
 
-        public double DetermineAreaOfRightTriangle(double SideA, double SideB)
-        {
-            double AreaOfTriangle = 0;
-
-            if(ValidateSideLength(SideA) && ValidateSideLength(SideB))
-            {
-                AreaOfTriangle = 0.5 * (SideA * SideB);
-            }
-
-            return AreaOfTriangle;
-        }
-
+        /*
+        **	Method Name:	ValidateTriangle()
+        **	Parameters:		double AngleA:  The first angle of the triangle to validate.
+        *                   double AngleB:  The second angle of the triangle to validate.
+        *                   double AngleC:  The third angle of the triangle to valdiate.
+        **	Return Values:	bool:   This method returns true to indicate the triangle is valid, and false to indicate it is not.
+        **	Description:	This method is designed to validate a triangle by comparing the sum of the angles with the known required value for a valid triangle (180 degrees).
+        **  Note:           This method is declared as static, so can not call non-static methods.
+        */
         public static bool ValidateTriangle(double AngleA, double AngleB, double AngleC)
         {
             bool Result = false;
@@ -548,6 +612,13 @@ namespace TriangleStuff
             return Result;
         }
 
+        /*
+        **	Method Name:	ValidateSideLength()
+        **	Parameters:		double Side: The side to be validated.
+        **	Return Values:	bool: This method returns true to indicate a valid side length, and false to indicate an invalid side length.
+        **	Description:	This method returns true to indicate a valid side length, and false to indicate an invalid side length. 
+        *   Note:           Declared as static, so can not call non-static methods.
+        */
         public static bool ValidateSideLength(double Side)
         {
             bool Result = false;
@@ -560,6 +631,15 @@ namespace TriangleStuff
             return Result;
         }
 
+
+        /*
+        **	Method Name:	DetermineThirdAngle()
+        **	Parameters:		double AngleA:  The first angle, to be used to calculate the third.
+        *                   double AngleB:  The second angle, to be used to calculate the third.
+        **	Return Values:	double: The resulting third angle.
+        **	Description:	This method is designed to determine a third triangle angle given the first and second.
+        *   Note:           This method is declared as static, so can not call non-static methods.
+        */
         public static double DetermineThirdAngle(double AngleA, double AngleB)
         {
             double AngleC = 0F;
@@ -577,6 +657,13 @@ namespace TriangleStuff
             return AngleC;
         }
 
+        /*
+        **	Method Name:	DetermineHypotenuse
+        **	Parameters:		double SideA:   The first side used as part of the calculation.
+        *                   double SideB:   The second side used as part of the calculation.
+        **	Return Values:	double: This method returns a double containing the hypotenuse.
+        **	Description:	This method is used to determine a hypotenuse, when given SideA and SideB. 
+        */
         public static double DetermineHypotenuse(double SideA, double SideB)
         {
             double Hypotenuse = 0F;
